@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+}
+
+.sticky_header {
+  width: 100%;
+  height: 100%;
+  line-height: 80px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 768px) {
+  .navigation {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    /* background-color: #fff; */
+    display: none; 
+  }
+
+  .menu {
+    width: 15rem;
+    height: 100%;
+    position:fixed;
+    top: 0;
+    right: 0;
+    /* background-color: #98cedf; */
+    background: url('./assets/images/Sky.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 200;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 30px;
+    
+  }
+
+  
+
+  .show_menu {
+    display: block; 
+   
+  }
+  .experience-section{
+    align-items: center;
+    font-size: 40px;
+  }
+}
