@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useFetchData from '../../hooks/useFetchData';
+import useGetProfile from '../../hooks/useFetchData';
 import { BASE_URL } from '../../config';
 
 const DoctorAboutList = ({ doctorData = {} }) => {
   const { id } = useParams();
-  const { data: doctor = doctorData, loading, error } = useFetchData(`${BASE_URL}/doctors/${id}`);
+  const { data: doctor = doctorData, loading, error } = useGetProfile(`${BASE_URL}/doctors/${id}`);
 
   const {
     name = '',

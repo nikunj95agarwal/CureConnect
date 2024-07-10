@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
   console.log("Token being used:", token);  // Log token being used
-
   const bookingHandler = async () => {
     try {
       console.log("Token being used:", token);  // Log token being used
@@ -13,7 +12,7 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
       const res = await fetch(`${BASE_URL}/bookings/checkout-session/${doctorId}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          
           Authorization: `Bearer ${token}`
         }
       });

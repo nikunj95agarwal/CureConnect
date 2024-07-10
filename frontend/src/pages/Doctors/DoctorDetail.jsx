@@ -5,15 +5,16 @@ import DoctorAbout from './DoctorAboutLogin';
 import Experience from '../../components/Doctors/Experience';
 import SidePanel from '../../components/Doctors/SidePanel';
 import { useParams } from 'react-router-dom';
-import useFetchData from '../../hooks/useFetchData';
+import useGetProfile from '../../hooks/useFetchData';
 import { BASE_URL } from '../../config';
 import DoctorAboutList from './DoctorAboutList';
 const DoctorDetails = () => {
   const [tab, setTab] = useState('about');
   const {id} = useParams();
-  const{data:doctor, loading,error} = useFetchData(`${BASE_URL}/doctors/${id}`)
+  const{data:doctor, loading,error} = useGetProfile(`${BASE_URL}/doctors/${id}`)
   
   const {name,qualification,experience,timeSlots,bio,about,specialization,ticketPrice, avgerageRating, totalRating} = doctor
+  console.log(doctor, "Doctor details")
   return (
     <section className="pt-40">
       <div className="max-w-[1170px] px-5 mx-auto">

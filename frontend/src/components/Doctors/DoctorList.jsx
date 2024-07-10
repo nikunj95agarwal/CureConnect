@@ -1,11 +1,12 @@
 import DoctorCard from './DoctorCard'
 import { BASE_URL } from '../../config'
-import useGetProfile from '../../hooks/useFetchData'
+// import useGetProfile from '../../hooks/useFetchData'
 import Loading from '../Loader/Loading'
 import Error from '../Error/Error'
+import useFetchData from '../../hooks/useFetchData'
 const DoctorList = () => {
 
-  const {data,loading,error} = useGetProfile(`${BASE_URL}/doctors`)
+  const {data,loading,error} = useFetchData(`${BASE_URL}/doctors`)
   return (<>
     {loading && <Loading/>}
     {error && <Error/>}

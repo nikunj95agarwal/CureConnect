@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, useContext } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { toast } from 'react-toastify';
@@ -72,26 +74,22 @@ const Profile = () => {
         throw new Error(result.message);
       }
   
-      // Fetch the updated user data
-      
       // Update the local state with the new user data
       setFormData({
         ...formData,
-        ...updatedUser,
-        qualifications: updatedUser.qualifications || formData.qualifications,
-        experiences: updatedUser.experiences || formData.experiences,
-        timeSlots: updatedUser.timeSlots || formData.timeSlots,
+        ...result.data,
+        qualifications: result.data.qualifications || formData.qualifications,
+        experiences: result.data.experiences || formData.experiences,
+        timeSlots: result.data.timeSlots || formData.timeSlots,
       });
   
       toast.success(result.message);
-      toast.info("Re-login to view Updated Profile");
-      
+      toast.info("Re-login to view updated profile");
     } catch (err) {
+      console.error("Profile update error:", err);
       toast.error(err.message);
     }
   };
-  
-  
 
   const addItem = (key, item) => {
     setFormData(prevFormData => ({ ...prevFormData, [key]: [...prevFormData[key], item] }));
@@ -130,7 +128,6 @@ const Profile = () => {
     e.preventDefault();
     deleteItem('timeSlots', index);
   };
-
   return (
     <div>
       <h2 className='text-headingColor font-bold text-[24px] leading-9 mb-10'>Profile Information</h2>

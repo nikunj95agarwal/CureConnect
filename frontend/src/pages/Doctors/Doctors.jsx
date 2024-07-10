@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import DoctorCard from '../../components/Doctors/DoctorCard';
-import useFetchData from '../../hooks/useFetchData';
 import Loading from '../../components/Loader/Loading';
 import Error from '../../components/Error/Error';
 import { BASE_URL } from '../../config';
+import useFetchData from '../../hooks/useFetchData';
 
 const Doctors = () => {
   const [query, setQuery] = useState('');
+
   const handleSearch = () => {
     setQuery(query.trim());
   };
@@ -36,13 +37,16 @@ const Doctors = () => {
       <section>
         <div className='container'>
           {loading && <Loading />}
-          {error && <Error />}
-          {!loading && !error && (
+          {error && <Error message={error} />}
+          {!loading && !error && doctors.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
               {doctors.map((doctor) => (
-                <DoctorCard key={doctor.id} doctor={doctor} />
+                <DoctorCard key={doctor._id} doctor={doctor} />
               ))}
             </div>
+          )}
+          {!loading && !error && doctors.length === 0 && (
+            <p className="text-center text-gray-500 mt-8">No doctors found.</p>
           )}
         </div>
       </section>

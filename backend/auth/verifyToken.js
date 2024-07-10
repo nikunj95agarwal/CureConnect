@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import Doctor from "../models/DoctorSchema.js";
 import User from "../models/UserSchema.js";
-
 export const authenticate = async (req, res, next) => {
   // get token from headers
   const authToken = req.headers.authorization;
@@ -41,12 +40,11 @@ export const restrict = (roles) => async (req, res, next) => {
   if (patient) {
     user = patient;
   }
-   if (doctor) {
+  if (doctor) {
     user = doctor;
   }
-   
 
-  if (!roles.includes(user.role)) {
+  if (!user || !roles.includes(user.role)) {
     return res.status(401).json({ success: false, message: "You're not authorized" });
   }
 

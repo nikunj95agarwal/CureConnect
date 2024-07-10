@@ -19,10 +19,11 @@ const Tabs = ({ tab, setTab }) => {
 
   return (
     <div>
-      <span className='lg:hidden' onClick={toggleMenu}>
+      <div className='lg:hidden bg-blue-500 text-yellow-300 p-2 flex justify-center' onClick={toggleMenu}>
         {/* Toggle menu icon */}
-        <BiMenu className='w-6 h-6 cursor-pointer' />
-      </span>
+        <BiMenu className='w-6 h-6 cursor-pointer' /> CLICK HERE FOR MORE OPTIONS
+        
+      </div>
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className='lg:hidden flex flex-col p-[30px] bg-white shadow-panelShadow items-center h-max rounded-md'>

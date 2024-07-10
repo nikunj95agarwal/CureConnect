@@ -3,14 +3,15 @@ import userImg from "../../assets/images/user-icon.png";
 import { authContext } from "../../context/AuthContext";
 import MyBookings from "./MyBookings";
 import Profile from "./Profile";
-import useFetchData from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 import Loading from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
+import useFetchData from "../../hooks/useFetchData";
 
 const MyAccount = () => {
+  const { dispatch } = useContext(authContext);
   const [tab, setTab] = useState('bookings'); // Set default tab to 'bookings'
-  const { user, dispatch } = useContext(authContext);
+  
 
   const { data: userData, loading, error } = useFetchData(`${BASE_URL}/users/profile/me`);
 
@@ -21,7 +22,7 @@ const MyAccount = () => {
   };
 
   return (
-    <section>
+    <section className="pt-20">
       <div className="max-w-[1170px] px-5 mx-auto">
         {loading && !error && <Loading />}
         {error && !loading && <Error errMessage={error} />}
@@ -36,13 +37,15 @@ const MyAccount = () => {
                 />
               </div>
               <h3 className="text-[18px] leading-[30px] text-headingColor font-bold">
-                {user?.name}
+                {userData.name}
               </h3>
               <p className="text-textColor text-[15px] leading-6 font-medium">
-                {user?.email}
+              {userData.email}
               </p>
               <p className="text-textColor text-[15px] leading-6 font-medium">
-                Blood Type:<span className="ml-2 text-headingColor text-[22px] leading-8" >{user?.bloodType || "N/A"}</span>
+                Blood Type:<span className="ml-2 text-headingColor text-[22px] leading-8" >
+                {userData.bloodType || "N/A"}
+                </span>
 
               </p>
             </div>

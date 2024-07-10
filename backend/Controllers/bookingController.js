@@ -1,13 +1,20 @@
-import UserSchema from "../models/UserSchema.js";
-import DoctorSchema from "../models/DoctorSchema.js";
-import BookingSchema from "../models/BookingSchema.js";
+import User from "../models/UserSchema.js";
+import Doctor from "../models/DoctorSchema.js";
+import Booking from "../models/BookingSchema.js";
 import Stripe from "stripe";
 
 export const getCheckoutSession = async (req, res) => {
     try {
-        const doctor = await DoctorSchema.findById(req.params.doctorId);
-        const user = await UserSchema.findById(req.params.userId);
+        const doctor = await Doctor.findById(req.params.doctorId);
+        const user = await User.findById(req.userId);
 
+        if (!doctor) {
+            return res.status(404).json({ success: false, message: "Doctor not found" });
+        }
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
         // Create stripe checkout session
@@ -16,7 +23,7 @@ export const getCheckoutSession = async (req, res) => {
             mode: 'payment',
             success_url: `${process.env.CLIENT_SITE_URL}/checkout-success`,
             cancel_url: `${req.protocol}://${req.get('host')}/doctors/${doctor.id}`,
-            customer_email: user.email,
+            // customer_email: user.email,
             client_reference_id: req.params.doctorId,
             line_items: [
                 {
@@ -25,26 +32,25 @@ export const getCheckoutSession = async (req, res) => {
                         unit_amount: doctor.ticketPrice * 100,
                         product_data: {
                             name: `Appointment with Dr. ${doctor.name}`,
-                            description: doctor.bio 
-                        },
-                        
+                            description: doctor.bio || 'Appointment description' // Provide a default value if doctor.bio is undefined
+                        }
                     },
                     quantity: 1
                 }
             ]
         });
 
+        const booking = new Booking({
+            doctor: doctor._id,
+            user: user._id,
+            ticketPrice: doctor.ticketPrice,
+            session: session.id
+        });
 
-        const booking = new BookingSchema({
-            doctor:doctor._id,
-            user:user._id,
-            ticketPrice: user.ticketPrice,
-            session:session.id
-        })
-
-        await booking.save()
-        res.status(200).json({ success:true, message : "Successfully Paid" , session});
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+        await booking.save();
+        res.status(200).json({ success: true, message: "Successfully Paid", session });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: "Error Creating Checkout Session" });
     }
 };

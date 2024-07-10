@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+// import Loading from '../../components/Loader/Loading';
+// import Error from '../../components/Error/Error';
+import useGetProfile from '../../hooks/useFetchData'; // Adjust the import as per your file structure
+import Tabs from './Tabs';
 import Loading from '../../components/Loader/Loading';
 import Error from '../../components/Error/Error';
-import useFetchData from '../../hooks/useFetchData'; // Adjust the import as per your file structure
-import Tabs from './Tabs';
-import { useContext } from 'react';
-import { authContext } from '../../context/AuthContext';
+// import { useContext } from 'react';
+// import { authContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../config'; // Ensure BASE_URL is correctly imported
 import doctorimg from "../../assets/images/doctor-img03.png"
 import starIcon from "../../assets/images/star.png"
@@ -13,13 +15,17 @@ import Appointments from './Appointments';
 import DoctorAboutLogin from '../../pages/Doctors/DoctorAboutLogin';
 const Dashboard = () => {
  
-  const { data, loading, error } = useFetchData(`${BASE_URL}/doctors/profile/me`);
+  const { data, loading, error } = useGetProfile(`${BASE_URL}/doctors/profile/me`);
   const [tab, setTab] = useState('overview');
-  const { user } = useContext(authContext);
-
+  // const { user } = useContext(authContext);
+  
+  console.log(data, "data is")
   return (
     <section className='pt-40'>
       <div className='max-w-[1170px] px-5 mx-auto'>
+      {loading && !error && <Loading />}
+      {error && !loading && <Error />}
+      {!loading && !error &&(
         <div className='grid lg:grid-cols-3 gap-[30px] lg:gap-[50px] '>
           <Tabs tab={tab} setTab={setTab} />
           <div className='lg:col-span-2'>
@@ -41,10 +47,10 @@ const Dashboard = () => {
         </figure>
         <div>
           <span className="bg-[#CCF0F3] text-irisBlueColor py-1  lg:py-2 lg:px-6 rounded text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold capitalize">
-          {user.specialization ? user.specialization : " Update Profile to add details!"}
+          {data.specialization ? data.specialization : " Update Profile to add details!"}
           </span>
           <h3 className="text-[22px] leading-9 font-bold text-headingColor mt-3">
-            {"Dr. " + user?.name}
+            {"Dr. " + data.name}
           </h3>
           <div className="flex items-center gap-[6px]">
             <span className="flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold">
@@ -56,7 +62,7 @@ const Dashboard = () => {
             </span>
           </div>
           <p className='text_para font-[15px] lg:max-w-[390px] leading-6'>
-          {user.bio ? user.bio : "Your bio will be shown here, Update Profile!"}
+          {data.bio ? data.bio : "Your bio will be shown here, Update Profile!"}
 
           </p>
         </div>
@@ -74,6 +80,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+      )}
       </div>
     </section>
   );

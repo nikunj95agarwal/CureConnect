@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import starIcon from "../../assets/images/star.png";
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
-import doctorimg from "../../assets/images/doctor-img03.png"
+import defaultDoctorImg from "../../assets/images/doctor-img03.png";
+
 const DoctorCard = ({ doctor }) => {
   const { name, avgRating, totalRating, photo, specialization, experiences } = doctor;
+
   return (
     <div className='p-10 lg:p-5'>
-      <div className=''>
-        <img src={doctorimg} alt={name} />
+      <div>
+        <img src={photo || defaultDoctorImg} alt={name} className="w-full h-auto" />
       </div>
       <h2 className='text-[18px] leading-[30px] lg:text-[26px] lg:leading-9 text-headingColor font-[700] mt-3 lg:mt-5'>
         {"Dr. " + name}
       </h2>
       <div className='mt-2 lg:mt-4 flex items-center justify-between'>
-        <span className='bg-yellow-300  py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 capitalize font-semibold rounded'>
+        <span className='bg-yellow-300 py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 capitalize font-semibold rounded'>
           {specialization}
         </span>
         <div className="flex items-center gap-[6px]">
@@ -33,10 +35,14 @@ const DoctorCard = ({ doctor }) => {
             +{totalPatients} patients
           </h3> */}
           <p className="text-[14px] leading-6 font-[400] text-textColor">
-            At {experiences && experiences[0]?.hospital}
+            {experiences && experiences[0]?.hospital ? `At ${experiences[0].hospital}` : 'Experience details not available'}
           </p>
         </div>
-        <Link to={`/doctors/${doctor._id}`} className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none">
+        <Link 
+          to={`/doctors/${doctor._id}`} 
+          className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+          aria-label={`View details of Dr. ${name}`}
+        >
           <BsArrowRight className="group-hover:text-white w-6 h-5" />
         </Link>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { token } from "../config.js";
 
 const useFetchData = (url) => {
@@ -7,32 +8,25 @@ const useFetchData = (url) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!url) return;
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+        const res = await axios.get(url, {
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        const result = await res.json();
-
-        if (!res.ok) {
-          throw new Error(result.message || 'Failed to fetch data');
-        }
-
-        setData(result.data);
-        setLoading(false);
+        setData(res.data.data);
       } catch (err) {
-        setLoading(false);
+        console.error("Fetch error:", err);
         setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-  
-      fetchData();
-     
+    fetchData();
   }, [url]);
 
   return { data, loading, error };
