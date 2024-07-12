@@ -398,7 +398,7 @@ const Profile = () => {
           ></textarea>
         </div>
         <div className='mt-7'>
-          <button type='submit' onClick={updateProfileHandler} className='bg-primaryColor text-white text-[18px] leading-[30px] w-full py-3 px-4 rounded-lg'>
+          <button type='submit' onClick={updateProfileHandler} className='bg-primaryColor text-white text-[18px] leading-[30px] w-full py-3 px-4 rounded-lg hover:bg-green-600 transition-all duration-300'>
             Update Profile
           </button>
         </div>

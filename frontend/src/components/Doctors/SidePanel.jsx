@@ -64,6 +64,9 @@ const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
         </ul>
       </div>
       <button onClick={bookingHandler} className="btn px-2 w-full rounded-md hover:bg-green-600">Book Appointment</button>
+      <div className="flex items-center justify-center">
+      <span className="text-center">(Use Card No. 4242-4242-4242-4242 For Testing Payment)</span>
+    </div>
     </div>
   );
 };

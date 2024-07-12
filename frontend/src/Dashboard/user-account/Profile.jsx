@@ -148,7 +148,7 @@ const Profile = () => {
                     <button
                         disabled={loading}
                         type='submit'
-                        className='w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3'
+                        className='w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3 hover:bg-green-600 transition-all duration-300'
                     >
                         {loading ? <HashLoader size={35} color="#fff" /> : 'Update Profile'}
                     </button>

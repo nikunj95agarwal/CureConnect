@@ -11,6 +11,7 @@ import { Routes, Router, Route } from 'react-router-dom'
 import CheckoutSuccess from '../components/Doctors/CheckoutSuccess'
 import Dashboard from '../Dashboard/doctor-account/Dashboard'
 import ProtectedRoute from './ProtectedRoute'
+import ErrorPage from '../components/Error/ErrorPage'
 const Routers = () => {
   return <Routes>
     <Route path='/' element= {<Home/>}/>
@@ -24,6 +25,7 @@ const Routers = () => {
     <Route path='/checkout-success' element= {<CheckoutSuccess/>}/>
     <Route path='/users/profile/me' element= {<ProtectedRoute allowedRoles={['patient']}> <MyAccount/></ProtectedRoute> }/>
     <Route path='/doctors/profile/me' element= {<ProtectedRoute allowedRoles={['doctor']}> <Dashboard/> </ProtectedRoute>}/>
+    <Route path="*" element={<ErrorPage/>} />
   </Routes>
 
 }
