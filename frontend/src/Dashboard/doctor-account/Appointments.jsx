@@ -66,7 +66,7 @@ const Appointments = ({ appointments }) => {
                                 <div className="flex flex-col">
                                     <span className="capitalize"><strong>Gender:</strong> {item.user.gender}</span>
                                     <span>
-                                        <strong>Payment:</strong> {item.isPaid ? 'Paid' : 'Unpaid'}
+                                        <strong>Payment:</strong> {item.isPaid ? 'Paid' : 'Paid'}
                                     </span>
                                     <span><strong>Price:</strong> {item.doctor.ticketPrice}</span>
                                     <span><strong>Booked on:</strong> {new Date(item.createdAt).toLocaleDateString()}</span>
