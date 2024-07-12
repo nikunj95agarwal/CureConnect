@@ -8,7 +8,7 @@ const MyBookings = () => {
   const { data: appointments, loading, error } = useFetchData(`${BASE_URL}/users/appointments/my-appointments`);
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 w-[25rem] sm:w-auto">
       {loading && <Loading message="Loading appointments..." />}
       {error && <Error message="Failed to fetch appointments. Please try again." />}
       {!loading && !error && appointments.length > 0 && (
